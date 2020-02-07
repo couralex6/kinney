@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+package mimo.charging;
+
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+
+service Orchestrator {
+  // Client is a controller for one or more electric vehicle charging points, and server is an
+  // optimizing coordinator. See Session and Command messages below for details of the
+  // requests and responses.
+  rpc Conduct(stream Session) returns (stream Command);
+}
+
+// Client provides a stream of Session messages to the server, which should be in chronological
+// order by measured time. Server estimates the state of charge using the inferred charging rate
+// and patterns from prior sessions at nearby charging points. Server uses this information to
+// prioritize ongoing sessions when curtailment is necessary.
+//
+// Server treats a session as terminated when it receives a message with end time set, or
+// if another (later) session begins on the same point.
+message Session {
+  // Required opaque session identifier.
+  string id = 1;
+
+  // Required opaque connector identifier, usually a single port on a charging station, which must
+  // not change during a session.
+  string point = 2;
+
+  // Total energy dispensed since the beginning of the charging session. Sessions should
+  // be ignored if this value is not known--in other words, do not use zero as unknown.
+  // 1 kilowatt-hour is 3.6 MJ.
+  double joules = 3;
+
+  // Required instant at which the energy consumption was read, which must not be before the
+  // start time, and should not be after the end time.
+  google.protobuf.Timestamp measured = 4;
+
+  // Required instant at which the session was established, typically the point of electrical contact
+  // of the plug, but potentially the point when power begins to flow. This must not change during
+  // a session.
+  google.protobuf.Timestamp start = 5;
+
+  // Optional instant at which the session was terminated, typically the point of electrical
+  // separation of the plug, but potentially the point when power ceases to flow. This is absent for
+  // ongoing sessions, and 
+  google.protobuf.Timestamp end = 6;
+}
+
+// Server sends a stream of Commands to client, each of which replaces any prior command for
+// the same point. So the client applies the limit only from the most recent command.
+message Command {
+  // Opaque connector identifier to which the command applies, usually a single port on a
+  // charging station.
+  string point = 1;
+
+  // Recommended upper bound on charging power, zero to cease charging entirely and infinity
+  // to charge without orchestrator limitations. A negative limit recommends returning energy to
+  // the charger, referred to as "V2G" (vehicle to grid) or "V2H" (vehicle to home).
+  //
+  // Limit applies to any session on the charger, including an ongoing session or a new session.
+  //
+  // This is "recommended", because the server must not depend on compliance; instead, it
+  // should observe compliance via the Session stream.
+  double limit = 2;
+
+  // Discard limitation after a period of time, equivalent to a command with an infinite limit.
+  // Commands have no explicit expiration if lifetime is absent, but clients are not required to
+  // persist limits prolongedly.
+  google.protobuf.Duration lifetime = 3;
+}
