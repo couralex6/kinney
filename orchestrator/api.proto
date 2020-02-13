@@ -18,8 +18,10 @@ service Orchestrator {
 // charging points. Server uses this information to prioritize ongoing sessions
 // when curtailment is necessary.
 //
-// Server treats a session as terminated when it receives a message with end
-// time set, or if another (later) session begins on the same point.
+// During a charging session, Session messages have a start time but no end
+// time. Once the session terminates, client should send a Session message with
+// start and end times both set. Otherwise server treats a session as terminated
+// when another (later) session begins on the same point.
 message Session {
   // Required opaque session identifier.
   string id = 1;
