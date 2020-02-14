@@ -1,15 +1,16 @@
 syntax = "proto3";
 
-package mimo.charging;
+package mimo;
 
 import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 
 service Orchestrator {
-  // Client is a controller for one or more electric vehicle charging points,
-  // and server is an optimizing coordinator. See Session and Command messages
-  // below for details of the requests and responses.
-  rpc Conduct(stream Session) returns (stream Command);
+  // Provide status updates and receive directives regarding an electrical
+  // vehicle charging point. Client is a controller for one or more charging
+  // points, and server is an optimizing coordinator. See Session and Command
+  // messages below for details of the requests and responses.
+  rpc Charger(stream ChargerSession) returns (stream ChargerCommand);
 }
 
 // Client provides a stream of Session messages to the server, which should be
@@ -22,7 +23,10 @@ service Orchestrator {
 // time. Once the session terminates, client should send a Session message with
 // start and end times both set. Otherwise server treats a session as terminated
 // when another (later) session begins on the same point.
-message Session {
+//
+// Minutely session updates are conventional, although server must accept
+// udpates at any frequency.
+message ChargerSession {
   // Required opaque session identifier.
   string id = 1;
 
@@ -30,10 +34,17 @@ message Session {
   // station, which must not change during a session.
   string point = 2;
 
-  // Total energy dispensed since the beginning of the charging session.
+  // Immediate power flow across the charging point. Positives values indicate
+  // power flowing towards the vehicle, and negative values indicate power
+  // flowing from the vehicle.
+  //
+  // Instantaneous readings are acceptable. Averaged readings over a time
+  // window are also acceptable, provided the window size is close to the
+  // reporting interval. Minutely averages are conventional.
+  //
   // Sessions should be ignored if this value is not known--in other words, do
-  // not use zero as unknown. 1 kilowatt-hour is 3.6 MJ.
-  double joules = 3;
+  // not use zero as unknown.
+  double watts = 3;
 
   // Required instant at which the energy consumption was read, which must not
   // be before the start time, and should not be after the end time.
@@ -53,25 +64,26 @@ message Session {
 // Server sends a stream of Commands to client, each of which replaces any prior
 // command for the same point. So the client applies the limit only from the
 // most recent command.
-message Command {
+message ChargerCommand {
   // Opaque connector identifier to which the command applies, usually a single
   // port on a charging station.
   string point = 1;
 
-  // Recommended upper bound on charging power, zero to cease charging entirely
-  // and infinity to charge without orchestrator limitations. A negative limit
-  // recommends returning energy to the charger, referred to as "V2G" (vehicle
-  // to grid) or "V2H" (vehicle to home).
+  // Recommended upper bound on charging power in watts. Zero requests that
+  // charging cease entirely and infinity advises charging without orchestrator
+  // limitations. A negative limit recommends returning energy to the charger,
+  // referred to as "V2G" (vehicle to grid) or "V2H" (vehicle to home).
   //
   // Limit applies to any session on the charger, including an ongoing session
   // or a new session.
   //
   // This is "recommended", because the server must not depend on compliance;
   // instead, it should observe compliance via the Session stream.
-  double limit = 2;
+  double limit = 2;  // Watts
 
-  // Discard limitation after a period of time, equivalent to a command with an
-  // infinite limit. Commands have no explicit expiration if lifetime is absent,
-  // but clients are not required to persist limits prolongedly.
+  // Disregard this command after a period of time, after which client should
+  // return to its default state. Commands have no explicit expiration if
+  // lifetime is absent, but clients are not required to persist limits
+  // prolongedly.
   google.protobuf.Duration lifetime = 3;
 }
