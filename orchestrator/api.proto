@@ -27,12 +27,16 @@ service Orchestrator {
 // Minutely session updates are conventional, although server must accept
 // udpates at any frequency.
 message ChargerSession {
-  // Required opaque session identifier.
-  string id = 1;
-
   // Required opaque connector identifier, usually a single port on a charging
   // station, which must not change during a session.
-  string point = 2;
+  string point = 1;
+
+  // Required opaque vehicle identifier. This must not change during a single
+  // charging session. It should also not change between sessions, since the
+  // server uses it to predict energy requirements based on previous sessions.
+  // Thus VIN, proximity token ID, account number, or a salted hash thereof are
+  // all suitable options.
+  string vehicle = 2;
 
   // Immediate power flow across the charging point. Positives values indicate
   // power flowing towards the vehicle, and negative values indicate power
