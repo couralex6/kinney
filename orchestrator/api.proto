@@ -1,0 +1,93 @@
+syntax = "proto3";
+
+package mimo;
+
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+
+service Orchestrator {
+  // Provide status updates and receive directives regarding an electrical
+  // vehicle charging point. Client is a controller for one or more charging
+  // points, and server is an optimizing coordinator. See Session and Command
+  // messages below for details of the requests and responses.
+  rpc Charger(stream ChargerSession) returns (stream ChargerCommand);
+}
+
+// Client provides a stream of Session messages to the server, which should be
+// in chronological order by measured time. Server estimates the state of charge
+// using the inferred charging rate and patterns from prior sessions at nearby
+// charging points. Server uses this information to prioritize ongoing sessions
+// when curtailment is necessary.
+//
+// During a charging session, Session messages have a start time but no end
+// time. Once the session terminates, client should send a Session message with
+// start and end times both set. Otherwise server treats a session as terminated
+// when another (later) session begins on the same point.
+//
+// Minutely session updates are conventional, although server must accept
+// udpates at any frequency.
+message ChargerSession {
+  // Required opaque connector identifier, usually a single port on a charging
+  // station, which must not change during a session.
+  string point = 1;
+
+  // Required opaque vehicle identifier. This must not change during a single
+  // charging session. It should also not change between sessions, since the
+  // server uses it to predict energy requirements based on previous sessions.
+  // Thus VIN, proximity token ID, account number, or a salted hash thereof are
+  // all suitable options.
+  string vehicle = 2;
+
+  // Immediate power flow across the charging point. Positives values indicate
+  // power flowing towards the vehicle, and negative values indicate power
+  // flowing from the vehicle.
+  //
+  // Instantaneous readings are acceptable. Averaged readings over a time
+  // window are also acceptable, provided the window size is close to the
+  // reporting interval. Minutely averages are conventional.
+  //
+  // Sessions should be ignored if this value is not known--in other words, do
+  // not use zero as unknown.
+  double watts = 3;
+
+  // Required instant at which the energy consumption was read, which must not
+  // be before the start time, and should not be after the end time.
+  google.protobuf.Timestamp measured = 4;
+
+  // Required instant at which the session was established, typically the point
+  // of electrical contact of the plug, but potentially the point when power
+  // begins to flow. This must not change during a session.
+  google.protobuf.Timestamp start = 5;
+
+  // Optional instant at which the session was terminated, typically the point
+  // of electrical separation of the plug, but potentially the point when power
+  // ceases to flow. This is absent for ongoing sessions, and
+  google.protobuf.Timestamp end = 6;
+}
+
+// Server sends a stream of Commands to client, each of which replaces any prior
+// command for the same point. So the client applies the limit only from the
+// most recent command.
+message ChargerCommand {
+  // Opaque connector identifier to which the command applies, usually a single
+  // port on a charging station.
+  string point = 1;
+
+  // Recommended upper bound on charging power in watts. Zero requests that
+  // charging cease entirely and infinity advises charging without orchestrator
+  // limitations. A negative limit recommends returning energy to the charger,
+  // referred to as "V2G" (vehicle to grid) or "V2H" (vehicle to home).
+  //
+  // Limit applies to any session on the charger, including an ongoing session
+  // or a new session.
+  //
+  // This is "recommended", because the server must not depend on compliance;
+  // instead, it should observe compliance via the Session stream.
+  double limit = 2;  // Watts
+
+  // Disregard this command after a period of time, after which client should
+  // return to its default state. Commands have no explicit expiration if
+  // lifetime is absent, but clients are not required to persist limits
+  // prolongedly.
+  google.protobuf.Duration lifetime = 3;
+}
