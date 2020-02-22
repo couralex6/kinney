@@ -1,0 +1,204 @@
+
+Prefixes:
+     xsd: http://www.w3.org/2001/XMLSchema
+     ns0: urn:dictionary:com.chargepoint.webservices
+
+Global elements:
+     
+     ns0:clearAlarms(searchQuery: ns0:clearAlarmsSearchQuery)
+     ns0:clearAlarmsResponse(responseCode: xsd:string, responseText: xsd:string)
+     ns0:clearShedState(shedQuery: ns0:shedQueryInputData)
+     ns0:clearShedStateResponse(responseCode: xsd:string, responseText: xsd:string, Success: xsd:int, sgID: xsd:int, stationID: xsd:string)
+     ns0:createLoadShedEvent(shedEvent: ns0:shedEvent)
+     ns0:createLoadShedEventResponse(responseCode: xsd:string, responseText: xsd:string, eventId: xsd:int)
+     ns0:get15minChargingSessionData(sessionID: xsd:long, energyConsumedInterval: xsd:boolean)
+     ns0:get15minChargingSessionDataResponse(responseCode: xsd:string, responseText: xsd:string, sessionID: xsd:long, stationID: xsd:string, portNumber: xsd:string, fifteenminData: ns0:oChargingSessionsData[])
+     ns0:getAlarms(searchQuery: ns0:getAlarmsSearchQuery)
+     ns0:getAlarmsResponse(responseCode: xsd:string, responseText: xsd:string, Alarms: ns0:oalarms[], moreFlag: xsd:int)
+     ns0:getCPNInstances()
+     ns0:getCPNInstancesResponse(CPN: ns0:ocpninstances[])
+     ns0:getChargingSessionData(searchQuery: ns0:sessionSearchdata)
+     ns0:getChargingSessionDataResponse(responseCode: xsd:string, responseText: xsd:string, ChargingSessionData: ns0:sessionSearchResultdata[], MoreFlag: xsd:int)
+     ns0:getLoad(searchQuery: {sgID: xsd:int, stationID: xsd:string})
+     ns0:getLoadResponse(responseCode: xsd:string, responseText: xsd:string, sgID: xsd:int, numStations: xsd:int, groupName: xsd:string, sgLoad: xsd:string, stationData: ns0:stationloaddata[])
+     ns0:getOrgsAndStationGroups(searchQuery: ns0:getOrgsAndStationGroupsSearchQuery)
+     ns0:getOrgsAndStationGroupsResponse(responseCode: xsd:string, responseText: xsd:string, orgData: ns0:ohostdata[])
+     ns0:getPublicStationStatus(searchQuery: ns0:statusSearchdata)
+     ns0:getPublicStationStatusResponse(responseCode: xsd:string, responseText: xsd:string, stationStatusData: ns0:oStatusdata[])
+     ns0:getPublicStations(searchQuery: ns0:stationSearchRequest)
+     ns0:getPublicStationsResponse(responseCode: xsd:string, responseText: xsd:string, stationData: ns0:stationData[])
+     ns0:getStationGroupDetails(sgID: xsd:int, stationID: xsd:string)
+     ns0:getStationGroupDetailsResponse(responseCode: xsd:string, responseText: xsd:string, groupName: xsd:string, numStations: xsd:int, groupData: ns0:childGroupData[], stationData: ns0:stationGroupData[])
+     ns0:getStationGroups(orgID: xsd:string)
+     ns0:getStationGroupsResponse(responseCode: xsd:string, responseText: xsd:string, groupData: ns0:groupsdata[])
+     ns0:getStationRights(searchQuery: ns0:stationRightsSearchRequest)
+     ns0:getStationRightsProfile(sgID: xsd:int, stationRightsProfile: xsd:string)
+     ns0:getStationRightsProfileResponse(responseCode: xsd:string, responseText: xsd:string, taskList: {Task: xsd:string, Description: xsd:string}[])
+     ns0:getStationRightsResponse(responseCode: xsd:string, responseText: xsd:string, rightsData: ns0:rightsData[], moreFlag: xsd:int)
+     ns0:getStationStatus(searchQuery: ns0:statusSearchdataForGetStations)
+     ns0:getStationStatusResponse(responseCode: xsd:string, responseText: xsd:string, stationData: ns0:oStatusdata[], moreFlag: xsd:int)
+     ns0:getStations(searchQuery: ns0:stationSearchRequestExtended)
+     ns0:getStationsResponse(responseCode: xsd:string, responseText: xsd:string, stationData: ns0:stationDataExtended[], moreFlag: xsd:int)
+     ns0:getTransactionData(searchQuery: ns0:getTransDataSearchRequest)
+     ns0:getTransactionDataResponse(responseCode: xsd:string, responseText: xsd:string, transactions: ns0:transDataParams, MoreFlag: xsd:int)
+     ns0:getUsers(searchQuery: ns0:getUsersSearchRequest)
+     ns0:getUsersResponse(responseCode: xsd:string, responseText: xsd:string, users: ns0:userParams)
+     ns0:registerFeeds(Events: ns0:dataEventName, searchQuery: ns0:feedStationSearch, feedType: ns0:feedType)
+     ns0:registerFeedsResponse(responseCode: xsd:string, responseText: xsd:string, subscriptionID: xsd:int)
+     ns0:removeLoadShedEvent(eventId: xsd:int)
+     ns0:removeLoadShedEventResponse(responseCode: xsd:string, responseText: xsd:string, response: xsd:string)
+     ns0:setWaitlistDone(stationID: xsd:string, portID: xsd:string, userID: xsd:string, customMessageText: xsd:string)
+     ns0:setWaitlistDoneResponse(responseCode: xsd:string, responseText: xsd:string)
+     ns0:shedLoad(shedQuery: ns0:shedLoadQueryInputData)
+     ns0:shedLoadResponse(responseCode: xsd:string, responseText: xsd:string, Success: xsd:int, sgID: xsd:int, stationID: xsd:string, allowedLoadPerStation: xsd:decimal, percentShedPerStation: ns0:percentShedRange, Ports: {Port: {portNumber: xsd:string, allowedLoadPerPort: xsd:decimal, percentShedPerPort: ns0:percentShedRange}[]})
+     ns0:updateFeed(subscriptionID: xsd:string, Refresh: xsd:boolean)
+     ns0:updateFeedResponse(responseCode: xsd:string, responseText: xsd:string)
+     ns0:updateUserStatus(userID: xsd:string, associationType: ns0:associationType, Status: ns0:Status, customText: xsd:string)
+     ns0:updateUserStatusResponse(responseCode: xsd:string, responseText: xsd:string)
+
+Global types:
+     xsd:anyType
+     xsd:ENTITIES
+     xsd:ENTITY
+     xsd:ID
+     xsd:IDREF
+     xsd:IDREFS
+     xsd:NCName
+     xsd:NMTOKEN
+     xsd:NMTOKENS
+     xsd:NOTATION
+     xsd:Name
+     xsd:QName
+     xsd:anySimpleType
+     xsd:anyURI
+     xsd:base64Binary
+     xsd:boolean
+     xsd:byte
+     xsd:date
+     xsd:dateTime
+     xsd:decimal
+     xsd:double
+     xsd:duration
+     xsd:float
+     xsd:gDay
+     xsd:gMonth
+     xsd:gMonthDay
+     xsd:gYear
+     xsd:gYearMonth
+     xsd:hexBinary
+     xsd:int
+     xsd:integer
+     xsd:language
+     xsd:long
+     xsd:negativeInteger
+     xsd:nonNegativeInteger
+     xsd:nonPositiveInteger
+     xsd:normalizedString
+     xsd:positiveInteger
+     xsd:short
+     xsd:string
+     xsd:time
+     xsd:token
+     xsd:unsignedByte
+     xsd:unsignedInt
+     xsd:unsignedLong
+     xsd:unsignedShort
+     ns0:childGroupData(sgID: xsd:int, sgName: xsd:string)
+     ns0:clearAlarmsSearchQuery(orgID: xsd:string, organizationName: xsd:string, stationID: xsd:string, stationName: xsd:string, sgID: xsd:int, sgName: xsd:string, startTime: xsd:dateTime, endTime: xsd:dateTime, portNumber: xsd:string, alarmType: xsd:string, clearReason: xsd:string)
+     ns0:connectedUserStatusTypes
+     ns0:connectionData(Status: ns0:connectedUserStatusTypes, requestTimeStamp: xsd:dateTime, customInfos: ns0:customInfosData)
+     ns0:connectionDataRequest(Status: ns0:connectedUserStatusTypes, customInfo: ns0:customInfoData)
+     ns0:credentialIDsData(credentialID: xsd:string[])
+     ns0:currencyCodeType
+     ns0:customInfoData(Key: xsd:string, Value: xsd:string)
+     ns0:customInfosData(customInfo: ns0:customInfoData[])
+     ns0:dataEventName(feedEventName: xsd:string[])
+     ns0:feedStationSearch(stationID: xsd:string, stationModel: xsd:string, stationName: xsd:string, Address: xsd:string, City: xsd:string, State: xsd:string, Country: xsd:string, postalCode: xsd:string, Level: xsd:string, Reservable: xsd:boolean, Geo: ns0:geoData, Proximity: xsd:int, proximityUnit: xsd:int, Connector: xsd:string, Voltage: xsd:string, Current: xsd:string, Power: xsd:string, sgID: xsd:int)
+     ns0:geoData(Lat: xsd:string, Long: xsd:string)
+     ns0:getAlarmsSearchQuery(orgID: xsd:string, organizationName: xsd:string, stationID: xsd:string, stationName: xsd:string, sgID: xsd:int, sgName: xsd:string, startTime: xsd:dateTime, endTime: xsd:dateTime, portNumber: xsd:string, startRecord: xsd:int, numTransactions: xsd:int)
+     ns0:getOrgsAndStationGroupsSearchQuery(orgID: xsd:string, organizationName: xsd:string, sgID: xsd:int, sgName: xsd:string)
+     ns0:getStationData(stationID: xsd:string, stationManufacturer: xsd:string, stationModel: xsd:string, stationMacAddr: xsd:string, stationSerialNum: xsd:string, stationActivationDate: xsd:dateTime, Address: xsd:string, City: xsd:string, State: xsd:string, Country: xsd:string, postalCode: xsd:string, Port: ns0:portData[], Pricing: ns0:pricingSpecification[], numPorts: xsd:int, driverName: xsd:string, driverAddress: xsd:string, driverEmail: xsd:string, driverPhoneNumber: xsd:string, lastModifiedDate: xsd:dateTime, mainPhone: xsd:string, modTimeStamp: xsd:dateTime, timezoneOffset: xsd:string, currencyCode: ns0:currencyCodeType)
+     ns0:getTransDataSearchRequest(stationID: xsd:string, stationName: xsd:string, stationMacAddr: xsd:string, orgID: xsd:string, organizationName: xsd:string, pricingRuleName: xsd:string, transactionType: ns0:transTypes, transactionID: xsd:long, fromTransactionTimeStamp: xsd:dateTime, toTransactionTimeStamp: xsd:dateTime, startRecord: xsd:int, numTransactions: xsd:int)
+     ns0:getUsersSearchRequest(userID: xsd:string, firstName: xsd:string, lastName: xsd:string, lastModifiedTimeStamp: xsd:dateTime, Connection: ns0:connectionDataRequest, managementRealm: ns0:managementRealmRequest, credentialID: xsd:string, startRecord: xsd:int, numUsers: xsd:int)
+     ns0:groupsdata(sgID: xsd:int, orgID: xsd:string, sgName: xsd:string, organizationName: xsd:string, stationData: {stationID: xsd:string, Geo: ns0:geoData}[])
+     ns0:managedUserStatusTypes
+     ns0:managementRealmData(Status: ns0:managedUserStatusTypes, signupTimeStamp: xsd:dateTime, customInfos: ns0:customInfosData)
+     ns0:managementRealmRequest(Status: ns0:managedUserStatusTypes, customInfo: ns0:customInfoData)
+     ns0:oChargingSessionsData(stationTime: xsd:dateTime, energyConsumed: xsd:double, peakPower: xsd:double, rollingPowerAvg: xsd:double)
+     ns0:oStatusdata(stationID: xsd:string, Port: ns0:portDataStatus[])
+     ns0:oalarms(stationID: xsd:string, stationName: xsd:string, stationModel: xsd:string, orgID: xsd:string, organizationName: xsd:string, stationManufacturer: xsd:string, stationSerialNum: xsd:string, portNumber: xsd:string, alarmType: xsd:string, alarmTime: xsd:dateTime, recordNumber: xsd:int)
+     ns0:ocpninstances(cpnID: xsd:string, cpnName: xsd:string, cpnDescription: xsd:string)
+     ns0:ohostdata(orgID: xsd:string, organizationName: xsd:string, sgData: {sgID: xsd:int, sgName: xsd:string, parentGroupID: xsd:string}[])
+     ns0:percentShedRange
+     ns0:portData(portNumber: xsd:string, stationName: xsd:string, Geo: ns0:geoData, Description: xsd:string, Reservable: xsd:int, Status: xsd:string, Level: xsd:string, timeStamp: xsd:dateTime, Mode: xsd:string, Connector: xsd:string, Voltage: xsd:string, Current: xsd:string, Power: xsd:string, estimatedCost: xsd:double)
+     ns0:portDataShed(portNumber: xsd:string)
+     ns0:portDataStatus(portNumber: xsd:string, Status: xsd:string, TimeStamp: xsd:dateTime, Connector: xsd:string, Power: xsd:string)
+     ns0:portsDataBlock(Port: ns0:portDataShed[])
+     ns0:pricingOptions(startTime: xsd:time, Duration: xsd:int, energyRequired: xsd:double, vehiclePower: xsd:double)
+     ns0:pricingSpecification(Type: xsd:string, startTime: xsd:time, endTime: xsd:time, minPrice: xsd:double, maxPrice: xsd:double, initialUnitPriceDuration: xsd:int, unitPricePerHour: xsd:double, unitPricePerHourThereafter: xsd:double, unitPricePerSession: xsd:double, unitPricePerKWh: xsd:double, sessionTime: xsd:string)
+     ns0:rightsData(sgID: xsd:string, sgName: xsd:string, stationRightsProfile: xsd:string, stationData: ns0:stationDataRights[])
+     ns0:serialNumberData(serialNumber: xsd:string[])
+     ns0:sessionSearchResultdata(stationID: xsd:string, stationName: xsd:string, portNumber: xsd:string, Address: xsd:string, City: xsd:string, State: xsd:string, Country: xsd:string, postalCode: xsd:string, sessionID: xsd:long, Energy: xsd:double, startTime: xsd:dateTime, endTime: xsd:dateTime, userID: xsd:string, recordNumber: xsd:long, credentialID: xsd:string)
+     ns0:sessionSearchdata(stationID: xsd:string, sessionID: xsd:long, stationName: xsd:string, Address: xsd:string, City: xsd:string, State: xsd:string, Country: xsd:string, postalCode: xsd:string, Proximity: xsd:double, proximityUnit: xsd:string, fromTimeStamp: xsd:dateTime, toTimeStamp: xsd:dateTime, startRecord: xsd:long, Geo: ns0:geoData)
+     ns0:shedEvent(stationID: xsd:string, sgID: xsd:string, eventStartTime: xsd:dateTime, eventDuration: xsd:int, allowOptOut: xsd:boolean, allowedLoadPerPort: xsd:double, percentShedPerStation: xsd:double)
+     ns0:shedGroupInputData(sgID: xsd:int)
+     ns0:shedLoadGroupInputData(sgID: xsd:int, allowedLoadPerStation: xsd:decimal, percentShedPerStation: ns0:percentShedRange)
+     ns0:shedLoadQueryInputData(shedGroup: ns0:shedLoadGroupInputData, shedStation: ns0:shedLoadStationInputData, timeInterval: xsd:int)
+     ns0:shedLoadStationInputData(stationID: xsd:string, allowedLoadPerStation: xsd:decimal, percentShedPerStation: ns0:percentShedRange, Ports: {Port: {portNumber: xsd:string, allowedLoadPerPort: xsd:decimal, percentShedPerPort: ns0:percentShedRange}[]})
+     ns0:shedQueryInputData(shedGroup: ns0:shedGroupInputData, shedStation: ns0:shedStationInputData)
+     ns0:shedStationInputData(stationID: xsd:string, Ports: ns0:portsDataBlock)
+     ns0:stationData(stationID: xsd:string, stationManufacturer: xsd:string, stationModel: xsd:string, stationMacAddr: xsd:string, stationSerialNum: xsd:string, Address: xsd:string, City: xsd:string, State: xsd:string, Country: xsd:string, postalCode: xsd:string, Port: ns0:portData[], Pricing: ns0:pricingSpecification[], numPorts: xsd:int, mainPhone: xsd:string, modTimeStamp: xsd:dateTime, timezoneOffset: xsd:string, currencyCode: ns0:currencyCodeType)
+     ns0:stationDataExtended(stationID: xsd:string, stationManufacturer: xsd:string, stationModel: xsd:string, stationMacAddr: xsd:string, stationSerialNum: xsd:string, stationActivationDate: xsd:dateTime, Address: xsd:string, City: xsd:string, State: xsd:string, Country: xsd:string, postalCode: xsd:string, Port: ns0:portData[], Pricing: ns0:pricingSpecification[], numPorts: xsd:int, driverName: xsd:string, driverAddress: xsd:string, driverEmail: xsd:string, driverPhoneNumber: xsd:string, lastModifiedDate: xsd:dateTime, mainPhone: xsd:string, modTimeStamp: xsd:dateTime, timezoneOffset: xsd:string, currencyCode: ns0:currencyCodeType, orgID: xsd:string, organizationName: xsd:string, sgID: xsd:string, sgName: xsd:string)
+     ns0:stationDataRights(stationID: xsd:string, stationName: xsd:string, stationSerialNum: xsd:string, stationMacAddr: xsd:string)
+     ns0:stationGroupData(stationID: xsd:string, stationName: xsd:string, Address: xsd:string)
+     ns0:stationIdList(stationID: xsd:string[])
+     ns0:stationPortData(portNumber: xsd:string, userID: xsd:string, credentialID: xsd:string, shedState: xsd:int, portLoad: xsd:decimal, allowedLoad: xsd:decimal, percentShed: ns0:percentShedRange)
+     ns0:stationRightsSearchRequest(stationID: xsd:string, stationManufacturer: xsd:string, stationModel: xsd:string, stationName: xsd:string, serialNumber: xsd:string, Address: xsd:string, City: xsd:string, State: xsd:string, Country: xsd:string, postalCode: xsd:string, Proximity: xsd:double, proximityUnit: xsd:string, Connector: xsd:string, Voltage: xsd:string, Current: xsd:string, Power: xsd:string, demoSerialNumber: ns0:serialNumberData, Reservable: xsd:boolean, Geo: ns0:geoData, Level: xsd:string, Mode: xsd:string, Pricing: ns0:pricingOptions, orgID: xsd:string, organizationName: xsd:string, sgID: xsd:string, sgName: xsd:string, provisionDateRange: {startDate: xsd:date, endDate: xsd:date}, currentFault: xsd:string, portStatus: xsd:string, adminStatus: xsd:string, networkStatus: xsd:string, provisionStatus: xsd:string, startRecord: xsd:long)
+     ns0:stationSearchRequest(stationID: xsd:string, stationManufacturer: xsd:string, stationModel: xsd:string, stationName: xsd:string, serialNumber: xsd:string, Address: xsd:string, City: xsd:string, State: xsd:string, Country: xsd:string, postalCode: xsd:string, Proximity: xsd:double, proximityUnit: xsd:string, Connector: xsd:string, Voltage: xsd:string, Current: xsd:string, Power: xsd:string, demoSerialNumber: ns0:serialNumberData, Reservable: xsd:boolean, Geo: ns0:geoData, Level: xsd:string, Mode: xsd:string, Pricing: ns0:pricingOptions)
+     ns0:stationSearchRequestExtended(stationID: xsd:string, stationManufacturer: xsd:string, stationModel: xsd:string, stationName: xsd:string, serialNumber: xsd:string, Address: xsd:string, City: xsd:string, State: xsd:string, Country: xsd:string, postalCode: xsd:string, Proximity: xsd:double, proximityUnit: xsd:string, Connector: xsd:string, Voltage: xsd:string, Current: xsd:string, Power: xsd:string, demoSerialNumber: ns0:serialNumberData, Reservable: xsd:boolean, Geo: ns0:geoData, Level: xsd:string, Mode: xsd:string, Pricing: ns0:pricingOptions, orgID: xsd:string, organizationName: xsd:string, sgID: xsd:string, sgName: xsd:string, stationActivationDate: xsd:dateTime, startRecord: xsd:int, numStations: xsd:int)
+     ns0:stationloaddata(stationID: xsd:string, stationName: xsd:string, Address: xsd:string, stationLoad: xsd:decimal, Port: ns0:stationPortData[])
+     ns0:statusSearchdata(stationID: xsd:string, stationIDs: ns0:stationIdList, stationManufacturer: xsd:string, stationModel: xsd:string, stationName: xsd:string, Address: xsd:string, City: xsd:string, State: xsd:string, Country: xsd:string, postalCode: xsd:string, Proximity: xsd:double, proximityUnit: xsd:string, Connector: xsd:string, Voltage: xsd:string, Current: xsd:string, Power: xsd:string, portDetails: xsd:boolean, demoSerialNumber: ns0:serialNumberData, Reservable: xsd:boolean, Geo: ns0:geoData, Status: xsd:int, Level: xsd:string, Mode: xsd:string, Pricing: ns0:pricingOptions)
+     ns0:statusSearchdataForGetStations(stationID: xsd:string, stationIDs: ns0:stationIdList, stationManufacturer: xsd:string, stationModel: xsd:string, stationName: xsd:string, Address: xsd:string, City: xsd:string, State: xsd:string, Country: xsd:string, postalCode: xsd:string, Proximity: xsd:double, proximityUnit: xsd:string, Connector: xsd:string, Voltage: xsd:string, Current: xsd:string, Power: xsd:string, portDetails: xsd:boolean, demoSerialNumber: ns0:serialNumberData, Reservable: xsd:boolean, Geo: ns0:geoData, Status: xsd:int, Level: xsd:string, Mode: xsd:string, Pricing: ns0:pricingOptions, startRecord: xsd:int, numStations: xsd:int)
+     ns0:transData(stationID: xsd:string, stationName: xsd:string, stationMacAddr: xsd:string, portNumber: xsd:int, organizationName: xsd:string, pricingRuleName: xsd:string, transactionType: ns0:transTypes, transactionID: xsd:long, Energy: xsd:double, transactionTime: xsd:dateTime, startTime: xsd:dateTime, endTime: xsd:dateTime, Currency: ns0:currencyCodeType, grossAmount: xsd:double, flexBillingServiceFee: xsd:double, netRevenue: xsd:double, exchangeRateUSD: xsd:double, recordNumber: xsd:int)
+     ns0:transDataParams(transactionData: ns0:transData[])
+     ns0:transTypes
+     ns0:userData(lastModifiedTimestamp: xsd:dateTime, userID: xsd:string, firstName: xsd:string, lastName: xsd:string, Connection: ns0:connectionData, managementRealm: ns0:managementRealmData, credentialIDs: ns0:credentialIDsData, recordNumber: xsd:int)
+     ns0:userParams(user: ns0:userData[], moreFlag: xsd:int)
+
+Bindings:
+     Soap11Binding: {urn:dictionary:com.chargepoint.webservices}chargepointservicesSOAP
+
+Service: chargepointservices
+     Port: ChargepointServicesSOAP (Soap11Binding: {urn:dictionary:com.chargepoint.webservices}chargepointservicesSOAP)
+         Operations:
+            clearAlarms(searchQuery: ns0:clearAlarmsSearchQuery) -> responseCode: xsd:string, responseText: xsd:string
+            clearShedState(shedQuery: ns0:shedQueryInputData) -> responseCode: xsd:string, responseText: xsd:string, Success: xsd:int, sgID: xsd:int, stationID: xsd:string
+            createLoadShedEvent(shedEvent: ns0:shedEvent) -> responseCode: xsd:string, responseText: xsd:string, eventId: xsd:int
+            get15minChargingSessionData(sessionID: xsd:long, energyConsumedInterval: xsd:boolean) -> responseCode: xsd:string, responseText: xsd:string, sessionID: xsd:long, stationID: xsd:string, portNumber: xsd:string, fifteenminData: ns0:oChargingSessionsData[]
+            getAlarms(searchQuery: ns0:getAlarmsSearchQuery) -> responseCode: xsd:string, responseText: xsd:string, Alarms: ns0:oalarms[], moreFlag: xsd:int
+            getCPNInstances() -> CPN: ns0:ocpninstances[]
+            getChargingSessionData(searchQuery: ns0:sessionSearchdata) -> responseCode: xsd:string, responseText: xsd:string, ChargingSessionData: ns0:sessionSearchResultdata[], MoreFlag: xsd:int
+            getLoad(searchQuery: {sgID: xsd:int, stationID: xsd:string}) -> responseCode: xsd:string, responseText: xsd:string, sgID: xsd:int, numStations: xsd:int, groupName: xsd:string, sgLoad: xsd:string, stationData: ns0:stationloaddata[]
+            getOrgsAndStationGroups(searchQuery: ns0:getOrgsAndStationGroupsSearchQuery) -> responseCode: xsd:string, responseText: xsd:string, orgData: ns0:ohostdata[]
+            getPublicStationStatus(searchQuery: ns0:statusSearchdata) -> responseCode: xsd:string, responseText: xsd:string, stationStatusData: ns0:oStatusdata[]
+            getPublicStations(searchQuery: ns0:stationSearchRequest) -> responseCode: xsd:string, responseText: xsd:string, stationData: ns0:stationData[]
+            getStationGroupDetails(sgID: xsd:int, stationID: xsd:string) -> responseCode: xsd:string, responseText: xsd:string, groupName: xsd:string, numStations: xsd:int, groupData: ns0:childGroupData[], stationData: ns0:stationGroupData[]
+            getStationGroups(orgID: xsd:string) -> responseCode: xsd:string, responseText: xsd:string, groupData: ns0:groupsdata[]
+            getStationRights(searchQuery: ns0:stationRightsSearchRequest) -> responseCode: xsd:string, responseText: xsd:string, rightsData: ns0:rightsData[], moreFlag: xsd:int
+            getStationRightsProfile(sgID: xsd:int, stationRightsProfile: xsd:string) -> responseCode: xsd:string, responseText: xsd:string, taskList: {Task: xsd:string, Description: xsd:string}[]
+            getStationStatus(searchQuery: ns0:statusSearchdataForGetStations) -> responseCode: xsd:string, responseText: xsd:string, stationData: ns0:oStatusdata[], moreFlag: xsd:int
+            getStations(searchQuery: ns0:stationSearchRequestExtended) -> responseCode: xsd:string, responseText: xsd:string, stationData: ns0:stationDataExtended[], moreFlag: xsd:int
+            getTransactionData(searchQuery: ns0:getTransDataSearchRequest) -> responseCode: xsd:string, responseText: xsd:string, transactions: ns0:transDataParams, MoreFlag: xsd:int
+            getUsers(searchQuery: ns0:getUsersSearchRequest) -> responseCode: xsd:string, responseText: xsd:string, users: ns0:userParams
+            registerFeeds(Events: ns0:dataEventName, searchQuery: ns0:feedStationSearch, feedType: ns0:feedType) -> responseCode: xsd:string, responseText: xsd:string, subscriptionID: xsd:int
+            removeLoadShedEvent(eventId: xsd:int) -> responseCode: xsd:string, responseText: xsd:string, response: xsd:string
+            setWaitlistDone(stationID: xsd:string, portID: xsd:string, userID: xsd:string, customMessageText: xsd:string) -> responseCode: xsd:string, responseText: xsd:string
+            shedLoad(shedQuery: ns0:shedLoadQueryInputData) -> responseCode: xsd:string, responseText: xsd:string, Success: xsd:int, sgID: xsd:int, stationID: xsd:string, allowedLoadPerStation: xsd:decimal, percentShedPerStation: ns0:percentShedRange, Ports: {Port: {portNumber: xsd:string, allowedLoadPerPort: xsd:decimal, percentShedPerPort: ns0:percentShedRange}[]}
+            updateFeed(subscriptionID: xsd:string, Refresh: xsd:boolean) -> responseCode: xsd:string, responseText: xsd:string
+            updateUserStatus(userID: xsd:string, associationType: ns0:associationType, Status: ns0:Status, customText: xsd:string) -> responseCode: xsd:string, responseText: xsd:string
+
+
+=========
+Malini  questions
+what is that userid and credentialid in the getLoad response?
+how do allowLoad and percentshed work?
