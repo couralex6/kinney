@@ -49,12 +49,15 @@ def get_username_token():
     return UsernameToken(
         get_ENV_val(_CP_USERNAME),
         get_ENV_val(_CP_PASSWORD))
-    
 
 
-# Off a specified root directory, load data is saved in a directory
-# # that captures  year, month, day and hour
 def get_file():
+    """
+    Takes a configured save root, and creates a directory
+    structure that comprehends year, month, day, and hour
+    and creates a file for appending in that directory with
+    configured data file name
+    """ 
     global _CURRENT_SAVE_PATH, _CURRENT_HOUR, _DATAFILE, _FILENAME
 
     now = datetime.now()
@@ -74,12 +77,11 @@ def get_file():
         _CURRENT_HOUR = now.hour
         # make directories as necessary
         try:
-            os.makedirs(str(save_path), 0o777)
-        except FileExistsError as fee:
-            if DEBUG:
-                logging.debug(fee)
+            if (not os.path.isdir(save_path)):
+                os.makedirs(str(save_path), 0o777)
+        except Exception as ee:
+            logging.error(ee)
         filename = os.path.join(save_path, _FILENAME)
-
         if DEBUG:
             logging.debug("Writing load data to " + filename + "\n")
         _DATAFILE = open(filename, "a")
@@ -106,8 +108,6 @@ def save_to_file(load):
     return
 
 
-
-# TODO handle errors
 def init():
     global _CLIENT
     _CLIENT = Client(WSDL, wsse=get_username_token())
@@ -140,13 +140,15 @@ def _load_query(id):
     # constructing search query
     search_query = {}
     if (cp.sgID is not None):
-        search_query["sgID"] = cp.sgID 
+        search_query["sgID"] = cp.sgID
     if (cp.stationID is not None):
         search_query["stationID"] = cp.stationID
     return search_query
 
+
 def _get_load(client, search_query):
     return client.service.getLoad(search_query)
+
 
 def process_load(load_res):
     res = []
@@ -159,7 +161,7 @@ def process_load(load_res):
             vehicle = port['credentialID']
             watt = port['portLoad']
             res.append({
-                'point':cp.ID, 
+                'point': cp.ID,
                 'vehicle': vehicle,
                 'watt': watt,
                 'measured': now,
@@ -176,10 +178,10 @@ def get_load(id):
         print(str(process_load(load)))
         print("\n---------------\n")
         return load
-    except:
-        logging.error("Error: getLoad ChargePoint SOAP service at " + WSDL )
+    except Exception as e:
+        errMsg = "Unable to getLoad data from " + WSDL + e
+        logging.error(errMsg)
         return None
-
 
 
 def shed_load(id, percent_amount=0, absolute_amount=0, time_interval=0):
@@ -239,13 +241,11 @@ def clear_shed(id):
         print("clear_shed query = " + str(shed_query))
 
     return _get_client().service.clearShedState(shed_query)
-    
 
 
 # Various Chargepoint API calls
 def get_CPN_instances():
     return _get_client().service.getCPNInstances()
-    
 
 
 def streamData(url):
@@ -266,5 +266,3 @@ def poll_load(id):
             print("Streaming not yet implemented")
         # seconds
         time.sleep(_INTERVAL * 60)
-
-

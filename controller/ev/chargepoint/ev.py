@@ -23,7 +23,7 @@ class EVException(Exception):
 
 
 # A Charge Session has a start time and only when complete an end time.
-# Trickle is when the charging rate drops .. by how much is vehicle type dependent
+# Trickle is when the charging rate drops, vehicle specific
 class ChargeSession():
     vehicleID = None
     start = None
@@ -53,7 +53,7 @@ class ChargePort():
 
     def __init__(self, portID):
         self.portID = portID
-      
+
     def shed(self, amount=None, percent=None):
         if (amount is not None):
             self.amount = amount
@@ -61,8 +61,8 @@ class ChargePort():
             if (percent is not None):
                 self.percent = percent
             else:
-                raise EVException("Either amount or percent have to be specified",
-                                    constants.ERR_INVALID_VALUE)
+                raise EVException("Specify either amount or percent",
+                                  constants.ERR_INVALID_VALUE)
         self.shedTime = time.time()
         self.shedState = True
 
@@ -72,27 +72,24 @@ class ChargePort():
         self.percent = None
 
 
-
 class ChargePoint():
     sgID = None
     stationID = None
     portID = None
     ID = None
 
-
     def __init__(self, sgID, stationID, portID):
         self.ID = ChargePoint.buildID(sgID, stationID, portID)
         self.sgID = sgID
         self.stationID = stationID
         self.portID = portID
-        
 
     @staticmethod
     def fromID(IDstr):
         if ((IDstr is None) or (IDstr == "")):
             print("Invalid input provided to ChargePoint constructor")
             raise EVException("IDstr cannot be empty or None",
-                                constants.ERR_INVALID_VALUE)
+                              constants.ERR_INVALID_VALUE)
         IDlist = IDstr.split(constants.SEPARATOR)
         sgID = None
         stationID = None
@@ -116,22 +113,20 @@ class ChargePoint():
             print("portID = " + str(portID) + "\n")
         return ChargePoint(sgID, stationID, portID)
 
-
     @staticmethod
     def buildID(sgID, stationID, portID):
         IDstr = ""
-        if ((sgID is None) and
-            (stationID is None)): 
-            raise EVException("Both station group and stationID cannot be unspecified",
-                                constants.ERR_INVALID_VALUE)
+        sep = constants.SEPARATOR
+        if ((sgID is None) and (stationID is None)):
+            raise EVException("Specify at least Station Group or Station ID",
+                              constants.ERR_INVALID_VALUE)
         if (sgID is not None):
             IDstr += sgID
         if (stationID is not None):
-            IDstr = IDstr + constants.SEPARATOR + stationID + constants.SEPARATOR
+            IDstr = IDstr + sep + stationID + sep
         if (portID is not None):
             IDstr += portID
         return IDstr
-
 
 
 class ChargeSessions:
@@ -143,7 +138,7 @@ class ChargeSessions:
     def get_start(self, vehicleID, watt, now):
         start = now
         if (vehicleID in self.sessions.keys()):
-            start = self.sessions[vehicleID] 
+            start = self.sessions[vehicleID]
             if (watt == 0):
                 # charge session over
                 del self.sessions[vehicleID]
