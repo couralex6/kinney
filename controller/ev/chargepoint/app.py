@@ -5,9 +5,10 @@ from flask import Flask, request
 import cp
 from constants import DEBUG, SUCCESS
 import json
+import logging
 
 app = Flask(__name__)
-SUCCESS = 100
+SUCCESS = "100"
 
 
 @app.route("/api/v1/load/<id>")

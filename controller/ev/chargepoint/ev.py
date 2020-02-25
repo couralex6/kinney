@@ -124,7 +124,7 @@ class ChargePoint():
             raise EVException("Specify at least Station Group or Station ID",
                               constants.ERR_INVALID_VALUE)
         if (sgID is not None):
-            IDstr += sgID
+            IDstr += str(sgID)
         if (stationID is not None):
             IDstr = IDstr + sep + stationID + sep
         if (portID is not None):

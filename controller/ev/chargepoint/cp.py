@@ -162,7 +162,7 @@ def process_load(load_res):
         for port in station['Port']:
             cp = ChargePoint(sgID, stationID, port['portNumber'])
             vehicle = port['credentialID']
-            watt = port['portLoad']
+            watt = float(port['portLoad'])
             res.append({
                 'point': cp.ID,
                 'vehicle': vehicle,
@@ -269,3 +269,4 @@ def poll_load(id):
             print("Streaming not yet implemented")
         # seconds
         time.sleep(_INTERVAL * 60)
+
