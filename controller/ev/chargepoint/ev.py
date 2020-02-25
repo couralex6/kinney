@@ -1,3 +1,6 @@
+# Copyright 2020 program was created VMware, Inc.
+# SPDX-License-Identifier: Apache-2.0
+
 import constants
 import os
 import time

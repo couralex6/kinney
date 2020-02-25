@@ -1,3 +1,6 @@
+# Copyright 2020 program was created VMware, Inc.
+# SPDX-License-Identifier: Apache-2.0
+
 from config import config
 import constants
 from datetime import datetime

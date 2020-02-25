@@ -1,3 +1,6 @@
+# Copyright Year(s) program was created VMware, Inc.
+# SPDX-License-Identifier: Apache-2.0
+
 from flask import Flask, request
 import cp
 from constants import DEBUG, SUCCESS
@@ -5,6 +8,7 @@ import json
 
 app = Flask(__name__)
 SUCCESS = 100
+
 
 @app.route("/api/v1/load/<id>")
 def get_load(id):
