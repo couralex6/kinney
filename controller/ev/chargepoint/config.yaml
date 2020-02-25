@@ -1,0 +1,19 @@
+# Copyright 2020 program was created VMware, Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+[COMMON]
+DEBUG : True
+
+[CHARGEPOINT]
+WSDL : https://webservices.chargepoint.com/cp_api_5.0.wsdl
+
+
+[POLL]
+# units minutes
+INTERVAL : 2
+SAVE_TO_FILE : True
+SAVE_ROOT : .
+FILENAME : load.data
+STREAM : False
+STREAM_TO : None
+
