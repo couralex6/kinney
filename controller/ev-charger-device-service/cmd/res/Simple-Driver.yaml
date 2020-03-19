@@ -1,0 +1,129 @@
+name: "charger-device"
+manufacturer: "Simple Corp."
+model: "SP-01"
+labels:
+  - "modbus"
+description: "Example of Simple Device"
+
+deviceResources:
+#  -
+#    name: "PercentCurtail"
+#    description: "Curtail the given charging station by a precentage provided in payload"
+#    properties:
+#      value:
+#        { type: "Float64", readWrite: "W" }
+#      units:
+#        { type: "string", readWrite: "R", defaultValue: "Percentage" }
+
+  - name: "Load"
+    description: "Get current total load"
+    properties:
+      value:
+        { type: "Float64", readWrite: "R", defaultValue: "0", floatEncoding: "eNotation"}
+      units:
+        { type: "string", readWrite: "R", defaultValue: "Kilo Watt" }
+  
+#  -
+#    name: "AmountCurtail"
+#    description: "Curtail the given charging station by a amount provided in payload"
+#    properties:
+#      value:
+#        { type: "Float64", readWrite: "W" }
+#      units:
+#        { type: "string", readWrite: "R", defaultValue: "KiloWatt" }
+#
+#  -
+#    name: "Uncurtail"
+#    description: "Reset the charging rate of the given charging station"
+#    properties:
+#      value:
+#        { type: "Bool", readWrite: "R" }
+#      units:
+#        { type: "string", readWrite: "R", defaultValue: "KiloWatt" }
+
+deviceCommands:
+#  -
+#    name: "CurtailPercentage"
+#    set:
+#      - { operation: "set", deviceResource: "PercentCurtail", parameter: "0"}
+#
+  - name: "Load"
+    get:
+      - { operation: "get", deviceResource: "Load"}
+#  -
+#    name: "curtailamount"
+#    set:
+#      - { operation: "set", deviceResource: "AmountCurtail", parameter: "0"}
+#  -
+#    name: "uncurtail"
+#    set:
+#      - { operation: "set", deviceResource: "Uncurtail"}
+
+
+
+coreCommands:
+  -
+    name: "Load"
+    get:
+      path: "/api/v1/device/{deviceId}/Load"
+      responses:
+        -
+          code: "200"
+          description: ""
+          expectedValues: ["Load"]
+        -
+          code: "503"
+          description: "service unavailable"
+          expectedValues: []
+#    - name: "CurtailPercentage"
+#      put:
+#        path: "/api/v1/device/{deviceId}/CurtailPercentage"
+#        parameterNames: ["CurtailPercentage"]
+#        responses:
+#          - code: "200"
+#            description: ""
+#          - code: "503"
+#            description: "service unavailable"
+#            expectedValues: []
+
+#  -
+#    name: "CurtailAmount"
+#    put:
+#      path: "/api/v1/device/{deviceId}/CurtailAmount"
+#      parameterNames: ["AmountCurtail"]
+#      responses:
+#        -
+#          code: "200"
+#          description: ""
+#        -
+#          code: "503"
+#          description: "service unavailable"
+#          expectedValues: []
+#
+# -
+#    name: "Uncurtail"
+#    put:
+#      path: "/api/v1/device/{deviceId}/Uncurtail"
+#      parameterNames: ["AmountCurtail"]
+#      responses:
+#        -
+#          code: "200"
+#          description: ""
+#        -
+#          code: "503"
+#          description: "service unavailable"
+#          expectedValues: []
+
+#  -
+#     name: "currentload"
+#     get:
+#       path: "/api/v1/device/{deviceId}/CurtailAmount"
+#       parameterNames:
+#       responses: ["Uncurtail"]
+#         -
+#           code: "200"
+#           description: ""
+#         -
+#           code: "503"
+#           description: "service unavailable"
+#           expectedValues: []
